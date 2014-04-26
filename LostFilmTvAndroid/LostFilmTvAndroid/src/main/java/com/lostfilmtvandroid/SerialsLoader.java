@@ -2,7 +2,6 @@ package com.lostfilmtvandroid;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -11,6 +10,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import br.com.dina.ui.widget.UITableView;
 
 /**
  * Created by veinhorn on 26.4.14.
@@ -22,12 +23,12 @@ public class SerialsLoader extends AsyncTask<String, Integer, SerialsContainer> 
     private final static String CLASS = "bb_a";
     private final static String REG_EXP = "\\((.*)\\)";
 
-    private TextView textView;
     private SerialsContainer serialsContainer;
+    private UITableView uiTableView;
 
-    public SerialsLoader(TextView textView, SerialsContainer serialsContainer) {
-        this.textView = textView;
+    public SerialsLoader(SerialsContainer serialsContainer, UITableView uiTableView) {
         this.serialsContainer = serialsContainer;
+        this.uiTableView = uiTableView;
     }
 
     @Override
@@ -53,6 +54,9 @@ public class SerialsLoader extends AsyncTask<String, Integer, SerialsContainer> 
     }
 
     protected void onPostExecute(SerialsContainer serialsContainer) {
-
+        for(Serial serial : serialsContainer) {
+            uiTableView.addBasicItem(serial.getTitle(), serial.getOriginalTitle());
+        }
+        uiTableView.commit();
     }
 }
