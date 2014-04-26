@@ -15,7 +15,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         textView = (TextView)findViewById(R.id.textview);
-        SerialDescriptionLoader serialDescriptionLoader = new SerialDescriptionLoader(textView, "http://www.lostfilm.tv/browse.php?cat=145");
+        SerialDescriptionLoader serialDescriptionLoader = new SerialDescriptionLoader(textView, "http://www.lostfilm.tv/browse.php?cat=123");
         serialDescriptionLoader.execute();
         /*
         uiTableView = (UITableView)findViewById(R.id.uitableview);

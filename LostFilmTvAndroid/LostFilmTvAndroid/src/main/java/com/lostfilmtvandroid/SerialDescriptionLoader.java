@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * Created by veinhorn on 26.4.14.
  */
-public class SerialDescriptionLoader extends AsyncTask<String, Integer, String> {
+public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialDescription> {
     private TextView textView;
     private String url;
 
@@ -26,8 +26,10 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, String> 
     }
 
     @Override
-    protected String doInBackground(String... params) {
-        String poster = "";
+    protected SerialDescription doInBackground(String... params) {
+        SerialDescription serialDescription = new SerialDescription();
+
+        String posterUrl = "";
         String year = "";
         String genres = "";
         String numberOfSeasons = "";
@@ -44,7 +46,7 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, String> 
             Elements elements = document.getElementsByClass("mid");
             Element midElement = elements.get(0);
             Element serialDescriptionElement = midElement.getElementsByTag("div").get(1);
-            poster = SerialsLoader.LOSTFILM_URL + serialDescriptionElement.getElementsByTag("img").get(0).attr("src");
+            posterUrl = SerialsLoader.LOSTFILM_URL + serialDescriptionElement.getElementsByTag("img").get(0).attr("src");
             Elements spanElements = serialDescriptionElement.getElementsByTag("span");
             year = spanElements.get(0).text();
             genres = spanElements.get(1).text();
@@ -65,14 +67,22 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, String> 
 
             officialPage = serialDescriptionElement.getElementsByTag("a").get(0).attr("href");
 
+            serialDescription.setPosterUrl(posterUrl);
+            serialDescription.setYear(year);
+            serialDescription.setGenres(genres);
+            serialDescription.setNumberOfSeasons(numberOfSeasons);
+            serialDescription.setDescription(description);
+            serialDescription.setCountry(country);
+            serialDescription.setStatus(status);
+            serialDescription.setOfficialPage(officialPage);
         } catch(IOException e) {
             Log.e(StringConstants.TAG, StringConstants.EXCEPTION, e);
         }
-        return officialPage;
+        return serialDescription;
     }
 
     @Override
-    protected void onPostExecute(String text) {
-        textView.setText(text);
+    protected void onPostExecute(SerialDescription serialDescription) {
+        textView.setText(serialDescription.toString());
     }
 }

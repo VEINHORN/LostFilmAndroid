@@ -11,6 +11,7 @@ public class SerialDescription extends Serial {
     private String description = "";
     private String country = "";
     private String status = "";
+    private String officialPage = "";
 
     public SerialDescription() {
 
@@ -70,5 +71,20 @@ public class SerialDescription extends Serial {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getOfficialPage() {
+        return officialPage;
+    }
+
+    public void setOfficialPage(String officialPage) {
+        this.officialPage = officialPage;
+    }
+
+    @Override
+    public String toString() {
+        return title + "\n" + originalTitle + "\n" + pageUrl + "\n" +
+                posterUrl + "\n" + year + "\n" + genres + "\n" + numberOfSeasons + "\n" +
+                description + "\n" + country + "\n" + status + "\n" + officialPage;
     }
 }
