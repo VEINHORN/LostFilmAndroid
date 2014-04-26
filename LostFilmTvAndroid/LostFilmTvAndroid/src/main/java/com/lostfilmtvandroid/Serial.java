@@ -8,6 +8,12 @@ public class Serial {
     private String originalTitle;
     private String pageUrl;
 
+    public Serial(String title, String originalTitle, String pageUrl) {
+        this.title = title;
+        this.originalTitle = originalTitle;
+        this.pageUrl = pageUrl;
+    }
+
     public String getTitle() {
         return title;
     }
