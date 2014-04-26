@@ -53,6 +53,6 @@ public class SerialsLoader extends AsyncTask<String, Integer, SerialsContainer> 
     }
 
     protected void onPostExecute(SerialsContainer serialsContainer) {
-        
+
     }
 }

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LostFilmTvAndroid.iml" filepath="$PROJECT_DIR$/LostFilmTvAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/LostFilmTvAndroid/LostFilmTvAndroid-LostFilmTvAndroid.iml" filepath="$PROJECT_DIR$/LostFilmTvAndroid/LostFilmTvAndroid-LostFilmTvAndroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android_uitableview/android_uitableview.iml" filepath="$PROJECT_DIR$/android_uitableview/android_uitableview.iml" />
     </modules>
   </component>
 </project>

@@ -1,1 +1,1 @@
-include ':LostFilmTvAndroid'
+include ':LostFilmTvAndroid', ':android_uitableview'
