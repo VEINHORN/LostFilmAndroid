@@ -4,9 +4,13 @@ package com.lostfilmtvandroid;
  * Created by veinhorn on 26.4.14.
  */
 public class Serial {
-    private String title;
-    private String originalTitle;
-    private String pageUrl;
+    protected String title;
+    protected String originalTitle;
+    protected String pageUrl;
+
+    public Serial() {
+
+    }
 
     public Serial(String title, String originalTitle, String pageUrl) {
         this.title = title;
