@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * Created by veinhorn on 26.4.14.
  */
-public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialItemDescription> {
+public class SerialDescriptionLoader extends AsyncTask<String, Integer, Episode/*SerialItemDescription*/> {
     private final static String BRACKETS_REG_EXP = "\\((.*)\\)";
     private final static String DELETE_BRACKETS_CONTENT_REG_EXP = " +\\((.*)\\)";
     private final static String A_TAG = "a";
@@ -27,6 +27,8 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialIt
     private final static String IMG_TAG = "img";
     private final static String SPAN_TAG = "span";
     private final static String SRC_ATTRIBUTE = "src";
+    private final static String NOBR_TAG = "nobr";
+    private final static String T_ROW_CLASS = "t_row";
 
     private TextView textView;
     private String url;
@@ -37,8 +39,9 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialIt
     }
 
     @Override
-    protected SerialItemDescription doInBackground(String... params) {
+    protected Episode /*SerialItemDescription*/ doInBackground(String... params) {
         SerialItemDescription serialDescription = new SerialItemDescription();
+        String text = "";
 
         String title = "";
         String originalTitle = "";
@@ -51,6 +54,7 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialIt
         String country = "";
         String status = "";
         String officialPage = "";
+        Episode episode = null;
 
         try {
             Document document = Jsoup.connect(url).get();
@@ -89,6 +93,12 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialIt
 
             officialPage = serialDescriptionElement.getElementsByTag(A_TAG).get(0).attr(HREF_ATTRIBUTE);
 
+            Elements episodeElements = midElement.getElementsByClass(T_ROW_CLASS);
+            Element episodeElement = episodeElements.get(0);
+            episode = new Episode();
+            String episodeOriginalTitle = episodeElement.getElementsByTag(NOBR_TAG).get(0).ownText().substring(1, episodeElement.getElementsByTag(NOBR_TAG).get(0).ownText().length() - 1);
+            episode.setOriginalTitle(episodeOriginalTitle);
+
             serialDescription.setTitle(title);
             serialDescription.setOriginalTitle(originalTitle);
             serialDescription.setPosterUrl(posterUrl);
@@ -102,11 +112,12 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialIt
         } catch(IOException e) {
             Log.e(StringConstants.TAG, StringConstants.EXCEPTION, e);
         }
-        return serialDescription;
+        return episode;
     }
 
     @Override
-    protected void onPostExecute(SerialItemDescription serialDescription) {
-        textView.setText(serialDescription.toString());
+    protected void onPostExecute(Episode episode/*SerialItemDescription serialDescription*/) {
+        textView.setText(episode.toString());
+        //textView.setText(serialDescription.toString());
     }
 }

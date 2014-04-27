@@ -4,8 +4,8 @@ package com.lostfilmtvandroid;
  * Created by veinhorn on 27.4.14.
  */
 public class Serial {
-    protected String title;
-    protected String originalTitle;
+    protected String title = "";
+    protected String originalTitle = "";
 
     public Serial() {
 
@@ -25,5 +25,10 @@ public class Serial {
 
     public void setOriginalTitle(String originalTitle) {
         this.originalTitle = originalTitle;
+    }
+
+    @Override
+    public String toString() {
+        return title + "\n" + originalTitle;
     }
 }
