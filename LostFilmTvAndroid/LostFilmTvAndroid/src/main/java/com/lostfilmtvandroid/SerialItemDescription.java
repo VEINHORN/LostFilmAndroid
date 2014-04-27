@@ -13,6 +13,8 @@ public class SerialItemDescription extends Serial {
     private String status = "";
     private String officialPage = "";
 
+    private Seasons seasons;
+
     public SerialItemDescription() {
 
     }
@@ -79,6 +81,14 @@ public class SerialItemDescription extends Serial {
 
     public void setOfficialPage(String officialPage) {
         this.officialPage = officialPage;
+    }
+
+    public Seasons getSeasons() {
+        return seasons;
+    }
+
+    public void setSeasons(Seasons seasons) {
+        this.seasons = seasons;
     }
 
     @Override

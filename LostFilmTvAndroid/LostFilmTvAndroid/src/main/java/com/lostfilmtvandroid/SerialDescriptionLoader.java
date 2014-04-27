@@ -10,13 +10,15 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Created by veinhorn on 26.4.14.
  */
-public class SerialDescriptionLoader extends AsyncTask<String, Integer, Episode/*SerialItemDescription*/> {
+public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialItemDescription> {
     private final static String BRACKETS_REG_EXP = "\\((.*)\\)";
     private final static String DELETE_BRACKETS_CONTENT_REG_EXP = " +\\((.*)\\)";
     private final static String A_TAG = "a";
@@ -29,9 +31,12 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, Episode/
     private final static String SRC_ATTRIBUTE = "src";
     private final static String NOBR_TAG = "nobr";
     private final static String T_ROW_CLASS = "t_row";
+    private final static String B_TAG = "b";
+    private final static String ALL_FIRST_SEASON = "Первый сезон полностью";
 
     private TextView textView;
     private String url;
+    private String text = "";
 
     public SerialDescriptionLoader(TextView textView, String url) {
         this.textView = textView;
@@ -39,9 +44,8 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, Episode/
     }
 
     @Override
-    protected Episode /*SerialItemDescription*/ doInBackground(String... params) {
+    protected SerialItemDescription doInBackground(String... params) {
         SerialItemDescription serialDescription = new SerialItemDescription();
-        String text = "";
 
         String title = "";
         String originalTitle = "";
@@ -54,7 +58,6 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, Episode/
         String country = "";
         String status = "";
         String officialPage = "";
-        Episode episode = null;
 
         try {
             Document document = Jsoup.connect(url).get();
@@ -94,10 +97,48 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, Episode/
             officialPage = serialDescriptionElement.getElementsByTag(A_TAG).get(0).attr(HREF_ATTRIBUTE);
 
             Elements episodeElements = midElement.getElementsByClass(T_ROW_CLASS);
-            Element episodeElement = episodeElements.get(0);
-            episode = new Episode();
-            String episodeOriginalTitle = episodeElement.getElementsByTag(NOBR_TAG).get(0).ownText().substring(1, episodeElement.getElementsByTag(NOBR_TAG).get(0).ownText().length() - 1);
-            episode.setOriginalTitle(episodeOriginalTitle);
+            List<Episode> episodes = new ArrayList<>();
+            for(Element episodeElement : episodeElements) {
+                Episode episode = new Episode();
+                String episodeTitle = episodeElement.getElementsByTag(NOBR_TAG).get(0).getElementsByTag(SPAN_TAG).get(0).ownText();
+                String episodeOriginalTitle = episodeElement.getElementsByTag(NOBR_TAG).get(0).ownText().substring(1, episodeElement.getElementsByTag(NOBR_TAG).get(0).ownText().length() - 1);
+                String episodeRating = episodeElement.getElementsByTag(B_TAG).get(0).ownText();
+                String episodeCommentsNumber = episodeElement.getElementsByTag(B_TAG).get(1).ownText();
+                String episodeCommentsUrl = SerialItemsLoader.LOSTFILM_URL + episodeElement.getElementsByTag(A_TAG).get(0).attr(HREF_ATTRIBUTE);
+                String episodeDescriptionUrl = SerialItemsLoader.LOSTFILM_URL + episodeElement.getElementsByTag(A_TAG).get(1).attr(HREF_ATTRIBUTE);
+                String episodeSeasonNumber = "";
+                pattern = Pattern.compile("s=\\d");
+                matcher = pattern.matcher(episodeCommentsUrl);
+                while(matcher.find()) {
+                    episodeSeasonNumber = matcher.group().replace("s=", "");
+                }
+
+                episode.setSeasonsNumber(episodeSeasonNumber);
+                episode.setTitle(episodeTitle);
+                episode.setOriginalTitle(episodeOriginalTitle);
+                episode.setRating(episodeRating);
+                episode.setCommentsNumber(episodeCommentsNumber);
+                episode.setCommentsUrl(episodeCommentsUrl);
+                episode.setEpisodeDescriptionUrl(episodeDescriptionUrl);
+
+                if(!episodeTitle.equals(ALL_FIRST_SEASON)) {
+                    episodes.add(episode);
+                }
+            }
+
+            Seasons seasons = new Seasons();
+            int numberOfSeasonsInt = Integer.parseInt(episodes.get(0).getSeasonsNumber());
+            for(int season = 1; season <= numberOfSeasonsInt; season++) {
+                Season seasonObj = new Season();
+                seasonObj.setSeasonNumber(season);
+                for(Episode episode : episodes) {
+                    if(episode.getSeasonsNumber().equals(Integer.toString(season))) {
+                        seasonObj.addEpisode(episode);
+                    }
+                }
+                seasonObj.reverse();
+                seasons.addSeason(seasonObj);
+            }
 
             serialDescription.setTitle(title);
             serialDescription.setOriginalTitle(originalTitle);
@@ -109,15 +150,22 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, Episode/
             serialDescription.setCountry(country);
             serialDescription.setStatus(status);
             serialDescription.setOfficialPage(officialPage);
+
+            serialDescription.setSeasons(seasons);
         } catch(IOException e) {
             Log.e(StringConstants.TAG, StringConstants.EXCEPTION, e);
         }
-        return episode;
+        return serialDescription;
     }
 
     @Override
-    protected void onPostExecute(Episode episode/*SerialItemDescription serialDescription*/) {
-        textView.setText(episode.toString());
+    protected void onPostExecute(SerialItemDescription serialDescription) {
+        /*
+        String str = "";
+        for(Episode episode : episodes) {
+            str += episode.toString() + "\n";
+        }*/
+        textView.setText(serialDescription.getSeasons().getSeason(4).getEpisode(3).toString());
         //textView.setText(serialDescription.toString());
     }
 }

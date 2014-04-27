@@ -4,8 +4,11 @@ package com.lostfilmtvandroid;
  * Created by veinhorn on 27.4.14.
  */
 public class Episode extends Serial {
-    private String rating;
+    private String seasonsNumber;
+    private String rating; // 10 is max for example 9.5/10
     private String commentsNumber;
+    private String commentsUrl;
+    private String episodeDescriptionUrl;
 
     public Episode() {
 
@@ -27,8 +30,32 @@ public class Episode extends Serial {
         this.commentsNumber = commentsNumber;
     }
 
+    public String getCommentsUrl() {
+        return commentsUrl;
+    }
+
+    public void setCommentsUrl(String commentsUrl) {
+        this.commentsUrl = commentsUrl;
+    }
+
+    public String getEpisodeDescriptionUrl() {
+        return episodeDescriptionUrl;
+    }
+
+    public void setEpisodeDescriptionUrl(String episodeDescriptionUrl) {
+        this.episodeDescriptionUrl = episodeDescriptionUrl;
+    }
+
+    public String getSeasonsNumber() {
+        return seasonsNumber;
+    }
+
+    public void setSeasonsNumber(String seasonsNumber) {
+        this.seasonsNumber = seasonsNumber;
+    }
+
     @Override
     public String toString() {
-        return super.toString() + "\n" + rating + "\n" + commentsNumber;
+        return super.toString() + "\n" + seasonsNumber + "\n" + rating + "\n" + commentsNumber + "\n" + commentsUrl + "\n" + episodeDescriptionUrl;
     }
 }
