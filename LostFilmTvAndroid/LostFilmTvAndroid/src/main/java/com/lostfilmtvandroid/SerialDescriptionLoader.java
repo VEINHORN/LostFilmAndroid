@@ -17,6 +17,17 @@ import java.util.regex.Pattern;
  * Created by veinhorn on 26.4.14.
  */
 public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialItemDescription> {
+    private final static String BRACKETS_REG_EXP = "\\((.*)\\)";
+    private final static String DELETE_BRACKETS_CONTENT_REG_EXP = " +\\((.*)\\)";
+    private final static String A_TAG = "a";
+    private final static String HREF_ATTRIBUTE = "href";
+    private final static String MID_CLASS = "mid";
+    private final static String DIV_TAG = "div";
+    private final static String H1_TAG = "h1";
+    private final static String IMG_TAG = "img";
+    private final static String SPAN_TAG = "span";
+    private final static String SRC_ATTRIBUTE = "src";
+
     private TextView textView;
     private String url;
 
@@ -31,30 +42,33 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialIt
 
         String title = "";
         String originalTitle = "";
-
         String posterUrl = "";
         String year = "";
         String genres = "";
         String numberOfSeasons = "";
         String description = "";
-
         String rawDescription = ""; // contains raw text from div
         String country = "";
         String status = "";
-
         String officialPage = "";
 
         try {
             Document document = Jsoup.connect(url).get();
-            Elements elements = document.getElementsByClass("mid");
+            Elements elements = document.getElementsByClass(MID_CLASS);
             Element midElement = elements.get(0);
-            Element serialDescriptionElement = midElement.getElementsByTag("div").get(1);
+            Element serialDescriptionElement = midElement.getElementsByTag(DIV_TAG).get(1);
 
-            title = serialDescriptionElement.getElementsByTag("h1").get(0).text();
+            String tempTitle = serialDescriptionElement.getElementsByTag(H1_TAG).get(0).text();
+            title = tempTitle.replaceAll(DELETE_BRACKETS_CONTENT_REG_EXP, "");
+            Pattern pattern = Pattern.compile(BRACKETS_REG_EXP);
+            Matcher matcher = pattern.matcher(tempTitle);
+            while(matcher.find()) {
+                originalTitle = matcher.group().substring(1, matcher.group().length() - 1);
+            }
 
-            posterUrl = SerialItemsLoader.LOSTFILM_URL + serialDescriptionElement.getElementsByTag("img").get(0).attr("src");
+            posterUrl = SerialItemsLoader.LOSTFILM_URL + serialDescriptionElement.getElementsByTag(IMG_TAG).get(0).attr(SRC_ATTRIBUTE);
 
-            Elements spanElements = serialDescriptionElement.getElementsByTag("span");
+            Elements spanElements = serialDescriptionElement.getElementsByTag(SPAN_TAG);
 
             year = spanElements.get(0).text();
             genres = spanElements.get(1).text();
@@ -62,8 +76,8 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialIt
             description = spanElements.get(3).text();
 
             rawDescription = serialDescriptionElement.ownText();
-            Pattern pattern = Pattern.compile("Страна: [a-zA-Zа-яА-Я]+\\b");
-            Matcher matcher = pattern.matcher(rawDescription);
+            pattern = Pattern.compile("Страна: [a-zA-Zа-яА-Я]+\\b");
+            matcher = pattern.matcher(rawDescription);
             while(matcher.find()) {
                 country = matcher.group().split(" ")[1];
             }
@@ -73,9 +87,10 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialIt
                 status = matcher.group().split(" ")[1];
             }
 
-            officialPage = serialDescriptionElement.getElementsByTag("a").get(0).attr("href");
+            officialPage = serialDescriptionElement.getElementsByTag(A_TAG).get(0).attr(HREF_ATTRIBUTE);
 
             serialDescription.setTitle(title);
+            serialDescription.setOriginalTitle(originalTitle);
             serialDescription.setPosterUrl(posterUrl);
             serialDescription.setYear(year);
             serialDescription.setGenres(genres);

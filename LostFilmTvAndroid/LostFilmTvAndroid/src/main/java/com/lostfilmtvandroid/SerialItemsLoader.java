@@ -37,8 +37,8 @@ public class SerialItemsLoader extends AsyncTask<String, Integer, SerialsContain
             Elements elements = Jsoup.connect(ALL_SERIALS_URL).get().getElementsByClass(CLASS);
             for(Element element : elements) {
                 String title = element.ownText();
-                String pageUrl = element.attr(HREF_ATTRIBUTE);
                 String originalTitle = "";
+                String pageUrl = element.attr(HREF_ATTRIBUTE);
                 Pattern pattern = Pattern.compile(REG_EXP);
                 Matcher matcher = pattern.matcher(element.text());
                 while(matcher.find()) {
