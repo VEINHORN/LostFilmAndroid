@@ -45,7 +45,7 @@ public class SerialsLoader extends AsyncTask<String, Integer, SerialsContainer> 
                     String tempTitle = matcher.group();
                     originalTitle = tempTitle.substring(1, tempTitle.length() - 1); //delete brackets
                 }
-                serialsContainer.addSerial(new Serial(title, originalTitle, LOSTFILM_URL + pageUrl));
+                serialsContainer.addSerial(new SerialItem(title, originalTitle, LOSTFILM_URL + pageUrl));
             }
         } catch(IOException e) {
             Log.e(StringConstants.TAG, StringConstants.EXCEPTION, e);
@@ -54,8 +54,8 @@ public class SerialsLoader extends AsyncTask<String, Integer, SerialsContainer> 
     }
 
     protected void onPostExecute(SerialsContainer serialsContainer) {
-        for(Serial serial : serialsContainer) {
-            uiTableView.addBasicItem(serial.getTitle(), serial.getOriginalTitle());
+        for(SerialItem serialItem : serialsContainer) {
+            uiTableView.addBasicItem(serialItem.getTitle(), serialItem.getOriginalTitle());
         }
         uiTableView.commit();
     }

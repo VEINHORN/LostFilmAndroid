@@ -7,18 +7,18 @@ import java.util.List;
 /**
  * Created by veinhorn on 26.4.14.
  */
-public class SerialsContainer implements Iterable<Serial> {
-    private List<Serial> serialArrayList = new ArrayList<>();
+public class SerialsContainer implements Iterable<SerialItem> {
+    private List<SerialItem> serialItemArrayList = new ArrayList<>();
 
-    public void addSerial(Serial serial) {
-        serialArrayList.add(serial);
+    public void addSerial(SerialItem serialItem) {
+        serialItemArrayList.add(serialItem);
     }
 
-    public Serial getSerial(int position) {
-        return serialArrayList.get(position);
+    public SerialItem getSerial(int position) {
+        return serialItemArrayList.get(position);
     }
 
-    public Iterator<Serial> iterator() {
-        return serialArrayList.iterator();
+    public Iterator<SerialItem> iterator() {
+        return serialItemArrayList.iterator();
     }
 }

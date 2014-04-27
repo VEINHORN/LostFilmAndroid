@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * Created by veinhorn on 26.4.14.
  */
-public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialDescription> {
+public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialItemDescription> {
     private TextView textView;
     private String url;
 
@@ -26,8 +26,8 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialDe
     }
 
     @Override
-    protected SerialDescription doInBackground(String... params) {
-        SerialDescription serialDescription = new SerialDescription();
+    protected SerialItemDescription doInBackground(String... params) {
+        SerialItemDescription serialDescription = new SerialItemDescription();
 
         String posterUrl = "";
         String year = "";
@@ -82,7 +82,7 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialDe
     }
 
     @Override
-    protected void onPostExecute(SerialDescription serialDescription) {
+    protected void onPostExecute(SerialItemDescription serialDescription) {
         textView.setText(serialDescription.toString());
     }
 }

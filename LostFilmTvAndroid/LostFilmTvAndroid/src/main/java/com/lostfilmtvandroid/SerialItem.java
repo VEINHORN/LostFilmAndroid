@@ -3,16 +3,16 @@ package com.lostfilmtvandroid;
 /**
  * Created by veinhorn on 26.4.14.
  */
-public class Serial {
+public class SerialItem {
     protected String title;
     protected String originalTitle;
     protected String pageUrl;
 
-    public Serial() {
+    public SerialItem() {
 
     }
 
-    public Serial(String title, String originalTitle, String pageUrl) {
+    public SerialItem(String title, String originalTitle, String pageUrl) {
         this.title = title;
         this.originalTitle = originalTitle;
         this.pageUrl = pageUrl;
