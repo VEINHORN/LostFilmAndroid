@@ -29,6 +29,9 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialIt
     protected SerialItemDescription doInBackground(String... params) {
         SerialItemDescription serialDescription = new SerialItemDescription();
 
+        String title = "";
+        String originalTitle = "";
+
         String posterUrl = "";
         String year = "";
         String genres = "";
@@ -46,8 +49,13 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialIt
             Elements elements = document.getElementsByClass("mid");
             Element midElement = elements.get(0);
             Element serialDescriptionElement = midElement.getElementsByTag("div").get(1);
-            posterUrl = SerialsLoader.LOSTFILM_URL + serialDescriptionElement.getElementsByTag("img").get(0).attr("src");
+
+            title = serialDescriptionElement.getElementsByTag("h1").get(0).text();
+
+            posterUrl = SerialItemsLoader.LOSTFILM_URL + serialDescriptionElement.getElementsByTag("img").get(0).attr("src");
+
             Elements spanElements = serialDescriptionElement.getElementsByTag("span");
+
             year = spanElements.get(0).text();
             genres = spanElements.get(1).text();
             numberOfSeasons = spanElements.get(2).text();
@@ -67,6 +75,7 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialIt
 
             officialPage = serialDescriptionElement.getElementsByTag("a").get(0).attr("href");
 
+            serialDescription.setTitle(title);
             serialDescription.setPosterUrl(posterUrl);
             serialDescription.setYear(year);
             serialDescription.setGenres(genres);

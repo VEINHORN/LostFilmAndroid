@@ -16,7 +16,7 @@ import br.com.dina.ui.widget.UITableView;
 /**
  * Created by veinhorn on 26.4.14.
  */
-public class SerialsLoader extends AsyncTask<String, Integer, SerialsContainer> {
+public class SerialItemsLoader extends AsyncTask<String, Integer, SerialsContainer> {
     public final static String LOSTFILM_URL = "http://www.lostfilm.tv";
     private final static String ALL_SERIALS_URL = "http://www.lostfilm.tv/serials.php";
     private final static String HREF_ATTRIBUTE = "href";
@@ -26,7 +26,7 @@ public class SerialsLoader extends AsyncTask<String, Integer, SerialsContainer> 
     private SerialsContainer serialsContainer;
     private UITableView uiTableView;
 
-    public SerialsLoader(SerialsContainer serialsContainer, UITableView uiTableView) {
+    public SerialItemsLoader(SerialsContainer serialsContainer, UITableView uiTableView) {
         this.serialsContainer = serialsContainer;
         this.uiTableView = uiTableView;
     }
