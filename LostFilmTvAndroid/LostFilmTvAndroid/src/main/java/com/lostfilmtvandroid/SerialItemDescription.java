@@ -3,7 +3,7 @@ package com.lostfilmtvandroid;
 /**
  * Created by veinhorn on 26.4.14.
  */
-public class SerialItemDescription extends SerialItem {
+public class SerialItemDescription extends Serial {
     private String posterUrl = "";
     private String year = "";
     private String genres = "";
@@ -83,7 +83,7 @@ public class SerialItemDescription extends SerialItem {
 
     @Override
     public String toString() {
-        return title + "\n" + originalTitle + "\n" + pageUrl + "\n" +
+        return title + "\n" + originalTitle + "\n" +
                 posterUrl + "\n" + year + "\n" + genres + "\n" + numberOfSeasons + "\n" +
                 description + "\n" + country + "\n" + status + "\n" + officialPage;
     }
