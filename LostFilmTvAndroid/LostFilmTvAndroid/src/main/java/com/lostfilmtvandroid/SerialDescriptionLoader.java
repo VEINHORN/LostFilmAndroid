@@ -19,11 +19,26 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialDe
     private Context context;
     private ImageView posterImageView;
     private TextView countryTextView;
+    private TextView yearTextView;
+    private TextView genreTextView;
+    private TextView numberOfSeasonsTextView;
+    private TextView statusTextView;
+    private TextView serialHomePageTextView;
+    private TextView serialDescriptionTextView;
 
-    public SerialDescriptionLoader(Context context, ImageView posterImageView, TextView countryTextView, String url) {
+    public SerialDescriptionLoader(Context context, ImageView posterImageView, TextView countryTextView,
+                                   TextView yearTextView, TextView genreTextView, TextView numberOfSeasonsTextView,
+                                   TextView statusTextView, TextView serialHomePageTextView, TextView serialDescriptionTextView, String url) {
         this.context = context;
         this.posterImageView = posterImageView;
         this.countryTextView = countryTextView;
+        this.yearTextView = yearTextView;
+        this.genreTextView = genreTextView;
+        this.numberOfSeasonsTextView = numberOfSeasonsTextView;
+        this.statusTextView = statusTextView;
+        this.serialHomePageTextView = serialHomePageTextView;
+        this.serialDescriptionTextView = serialDescriptionTextView;
+
         this.url = url;
     }
 
@@ -33,12 +48,17 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialDe
     }
 
     @Override
-    protected void onPostExecute(SerialDescription serialDescription) {
-        this.serialDescription = serialDescription;
+    protected void onPostExecute(SerialDescription description) {
+        this.serialDescription = description;
 
         Picasso.with(context).setDebugging(true);
         Picasso.with(context).load(serialDescription.getPosterUrl()).into(posterImageView);
         countryTextView.setText(serialDescription.getCountry());
-        //textView.setText(serialDescription.getSeasons().getSeason(4).getEpisode(3).toString());
+        yearTextView.setText(serialDescription.getYear());
+        genreTextView.setText(serialDescription.getGenres());
+        numberOfSeasonsTextView.setText(serialDescription.getNumberOfSeasons());
+        statusTextView.setText(serialDescription.getStatus());
+        serialHomePageTextView.setText(serialDescription.getOfficialPage());
+        serialDescriptionTextView.setText(serialDescription.getDescription());
     }
 }
