@@ -8,9 +8,9 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-        <TextView
+        <br.com.dina.ui.widget.UITableView
+            android:id="@+id/tableView"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/textview"/>
+            android:layout_height="fill_parent"/>
     </ScrollView>
 </LinearLayout>

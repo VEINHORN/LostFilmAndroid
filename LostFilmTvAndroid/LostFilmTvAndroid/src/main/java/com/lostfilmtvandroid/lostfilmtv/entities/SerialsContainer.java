@@ -8,13 +8,14 @@ import java.util.List;
  * Created by veinhorn on 26.4.14.
  */
 public class SerialsContainer implements Iterable<Serial> {
-    private List<Serial> serialItemArrayList = new ArrayList<>();
+    private List<Serial> serialItemArrayList;
 
     public SerialsContainer() {
-
+        serialItemArrayList  = new ArrayList<>();
     }
 
     public SerialsContainer(SerialsContainer serialsContainer) {
+        serialItemArrayList  = new ArrayList<>();
         for(Serial serial : serialsContainer) {
             Serial newSerial = new Serial();
             newSerial.setTitle(serial.getTitle());
@@ -22,6 +23,10 @@ public class SerialsContainer implements Iterable<Serial> {
             newSerial.setPageUrl(serial.getPageUrl());
             addSerial(newSerial);
         }
+    }
+
+    public int size() {
+        return serialItemArrayList.size();
     }
 
     public void addSerial(Serial serialItem) {

@@ -25,7 +25,7 @@ public class UITableView extends LinearLayout {
 	private LinearLayout mListContainer;
 	private List<IListItem> mItemList;
 	private ClickListener mClickListener;
-	
+
 	public UITableView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mItemList = new ArrayList<IListItem>();
@@ -91,6 +91,19 @@ public class UITableView extends LinearLayout {
 	public void addBasicItem(BasicItem item) {
 		mItemList.add(item);
 	}
+
+    /**
+     * Removes the BasicItem at the specified position
+     * @param position
+     */
+    public void removeBasicItem(int position) {
+        mItemList.remove(position);
+        mListContainer.removeAllViews();
+        if(mItemList.size() > 1) {
+            mIndexController--;
+        }
+        commit();
+    }
 	
 	/**
 	 * 

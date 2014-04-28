@@ -24,12 +24,12 @@ public class SerialDescriptionFetcher extends LostFilmTvFetcher {
     private final static String DELETE_BRACKETS_CONTENT_REG_EXP = " +\\((.*)\\)";
     private final static String A_TAG = "a";
     private final static String HREF_ATTRIBUTE = "href";
-    private final static String MID_CLASS = "mid";
-    private final static String DIV_TAG = "div";
+    public final static String MID_CLASS = "mid";
+    public final static String DIV_TAG = "div";
     private final static String H1_TAG = "h1";
-    private final static String IMG_TAG = "img";
+    public final static String IMG_TAG = "img";
     private final static String SPAN_TAG = "span";
-    private final static String SRC_ATTRIBUTE = "src";
+    public final static String SRC_ATTRIBUTE = "src";
     private final static String NOBR_TAG = "nobr";
     private final static String T_ROW_CLASS = "t_row";
     private final static String B_TAG = "b";
@@ -90,31 +90,36 @@ public class SerialDescriptionFetcher extends LostFilmTvFetcher {
             Elements episodeElements = midElement.getElementsByClass(T_ROW_CLASS);
             List<Episode> episodes = new ArrayList<>();
             for(Element episodeElement : episodeElements) {
-                Episode episode = new Episode();
-                String episodeTitle = episodeElement.getElementsByTag(NOBR_TAG).get(0).getElementsByTag(SPAN_TAG).get(0).ownText();
-                String episodeOriginalTitle = episodeElement.getElementsByTag(NOBR_TAG).get(0).ownText().substring(1, episodeElement.getElementsByTag(NOBR_TAG).get(0).ownText().length() - 1);
-                String episodeRating = episodeElement.getElementsByTag(B_TAG).get(0).ownText();
-                String episodeCommentsNumber = episodeElement.getElementsByTag(B_TAG).get(1).ownText();
-                String episodeCommentsUrl = LOSTFILM_URL + episodeElement.getElementsByTag(A_TAG).get(0).attr(HREF_ATTRIBUTE);
-                String episodeDescriptionUrl = LOSTFILM_URL + episodeElement.getElementsByTag(A_TAG).get(1).attr(HREF_ATTRIBUTE);
-                String episodeSeasonNumber = "";
-                pattern = Pattern.compile("s=\\d");
-                matcher = pattern.matcher(episodeCommentsUrl);
-                while(matcher.find()) {
-                    episodeSeasonNumber = matcher.group().replace("s=", "");
+                try {
+                    Episode episode = new Episode();
+                    String episodeTitle = episodeElement.getElementsByTag(NOBR_TAG).get(0).getElementsByTag(SPAN_TAG).get(0).ownText();
+                    String episodeOriginalTitle = episodeElement.getElementsByTag(NOBR_TAG).get(0).ownText().substring(1, episodeElement.getElementsByTag(NOBR_TAG).get(0).ownText().length() - 1);
+                    String episodeRating = episodeElement.getElementsByTag(B_TAG).get(0).ownText();
+                    String episodeCommentsNumber = episodeElement.getElementsByTag(B_TAG).get(1).ownText();
+                    String episodeCommentsUrl = LOSTFILM_URL + episodeElement.getElementsByTag(A_TAG).get(0).attr(HREF_ATTRIBUTE);
+                    String episodeDescriptionUrl = LOSTFILM_URL + episodeElement.getElementsByTag(A_TAG).get(1).attr(HREF_ATTRIBUTE);
+                    String episodeSeasonNumber = "";
+                    pattern = Pattern.compile("s=\\d");
+                    matcher = pattern.matcher(episodeCommentsUrl);
+                    while(matcher.find()) {
+                        episodeSeasonNumber = matcher.group().replace("s=", "");
+                    }
+
+                    episode.setSeasonsNumber(episodeSeasonNumber);
+                    episode.setTitle(episodeTitle);
+                    episode.setOriginalTitle(episodeOriginalTitle);
+                    episode.setRating(episodeRating);
+                    episode.setCommentsNumber(episodeCommentsNumber);
+                    episode.setCommentsUrl(episodeCommentsUrl);
+                    episode.setEpisodeDescriptionUrl(episodeDescriptionUrl);
+
+                    if(!episodeTitle.equals(ALL_FIRST_SEASON)) {
+                        episodes.add(episode);
+                    }
+                } catch(IndexOutOfBoundsException e) {
+                    episodes.add(new Episode());
                 }
 
-                episode.setSeasonsNumber(episodeSeasonNumber);
-                episode.setTitle(episodeTitle);
-                episode.setOriginalTitle(episodeOriginalTitle);
-                episode.setRating(episodeRating);
-                episode.setCommentsNumber(episodeCommentsNumber);
-                episode.setCommentsUrl(episodeCommentsUrl);
-                episode.setEpisodeDescriptionUrl(episodeDescriptionUrl);
-
-                if(!episodeTitle.equals(ALL_FIRST_SEASON)) {
-                    episodes.add(episode);
-                }
             }
 
             Seasons seasons = new Seasons();
@@ -122,9 +127,13 @@ public class SerialDescriptionFetcher extends LostFilmTvFetcher {
             for(int season = 1; season <= numberOfSeasonsInt; season++) {
                 Season seasonObj = new Season();
                 seasonObj.setSeasonNumber(season);
-                for(Episode episode : episodes) {
-                    if(episode.getSeasonsNumber().equals(Integer.toString(season))) {
-                        seasonObj.addEpisode(episode);
+                for(Episode episode : episodes) { // see that later
+                    try {
+                        if(episode.getSeasonsNumber().equals(Integer.toString(season))) {
+                            seasonObj.addEpisode(episode);
+                        }
+                    } catch(NullPointerException e) {
+
                     }
                 }
                 seasonObj.reverse();
