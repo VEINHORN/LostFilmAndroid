@@ -1,32 +1,44 @@
 package com.lostfilmtvandroid;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lostfilmtvandroid.lostfilmtv.entities.SerialDescription;
 import com.lostfilmtvandroid.lostfilmtv.fetchers.SerialDescriptionFetcher;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by veinhorn on 26.4.14.
  */
 public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialDescription> {
-
-    private TextView textView;
+    private SerialDescription serialDescription;
     private String url;
 
-    public SerialDescriptionLoader(TextView textView, String url) {
-        this.textView = textView;
+    private Context context;
+    private ImageView posterImageView;
+    private TextView countryTextView;
+
+    public SerialDescriptionLoader(Context context, ImageView posterImageView, TextView countryTextView, String url) {
+        this.context = context;
+        this.posterImageView = posterImageView;
+        this.countryTextView = countryTextView;
         this.url = url;
     }
 
     @Override
     protected SerialDescription doInBackground(String... params) {
-        SerialDescription serialItemDescription = SerialDescriptionFetcher.loadSerialDescription(url);
-        return serialItemDescription;
+        return SerialDescriptionFetcher.loadSerialDescription(url);
     }
 
     @Override
     protected void onPostExecute(SerialDescription serialDescription) {
-        textView.setText(serialDescription.getSeasons().getSeason(4).getEpisode(3).toString());
+        this.serialDescription = serialDescription;
+
+        Picasso.with(context).setDebugging(true);
+        Picasso.with(context).load(serialDescription.getPosterUrl()).into(posterImageView);
+        countryTextView.setText(serialDescription.getCountry());
+        //textView.setText(serialDescription.getSeasons().getSeason(4).getEpisode(3).toString());
     }
 }

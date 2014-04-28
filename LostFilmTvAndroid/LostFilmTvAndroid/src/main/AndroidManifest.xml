@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".lostfilmtv.SerialDescriptionActivity"/>
+            android:name=".SerialDescriptionActivity"/>
 
     </application>
 
