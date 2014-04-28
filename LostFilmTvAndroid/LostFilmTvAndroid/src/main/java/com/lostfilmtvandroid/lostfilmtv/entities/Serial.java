@@ -1,16 +1,16 @@
-package com.lostfilmtvandroid;
+package com.lostfilmtvandroid.lostfilmtv.entities;
 
 /**
  * Created by veinhorn on 26.4.14.
  */
-public class SerialItem extends Serial {
+public class Serial extends BaseSerial {
     protected String pageUrl;
 
-    public SerialItem() {
+    public Serial() {
 
     }
 
-    public SerialItem(String title, String originalTitle, String pageUrl) {
+    public Serial(String title, String originalTitle, String pageUrl) {
         this.title = title;
         this.originalTitle = originalTitle;
         this.pageUrl = pageUrl;

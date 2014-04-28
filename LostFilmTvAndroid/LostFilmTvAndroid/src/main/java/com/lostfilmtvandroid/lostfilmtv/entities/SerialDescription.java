@@ -1,9 +1,9 @@
-package com.lostfilmtvandroid;
+package com.lostfilmtvandroid.lostfilmtv.entities;
 
 /**
  * Created by veinhorn on 26.4.14.
  */
-public class SerialItemDescription extends Serial {
+public class SerialDescription extends BaseSerial {
     private String posterUrl = "";
     private String year = "";
     private String genres = "";
@@ -15,7 +15,7 @@ public class SerialItemDescription extends Serial {
 
     private Seasons seasons;
 
-    public SerialItemDescription() {
+    public SerialDescription() {
 
     }
 

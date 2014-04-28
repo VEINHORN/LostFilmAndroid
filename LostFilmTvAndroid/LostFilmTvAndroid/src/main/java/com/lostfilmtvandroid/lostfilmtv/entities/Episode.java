@@ -1,9 +1,9 @@
-package com.lostfilmtvandroid;
+package com.lostfilmtvandroid.lostfilmtv.entities;
 
 /**
  * Created by veinhorn on 27.4.14.
  */
-public class Episode extends Serial {
+public class Episode extends BaseSerial {
     private String seasonsNumber;
     private String rating; // 10 is max for example 9.5/10
     private String commentsNumber;

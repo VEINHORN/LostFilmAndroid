@@ -1,4 +1,4 @@
-package com.lostfilmtvandroid;
+package com.lostfilmtvandroid.lostfilmtv.entities;
 
 import java.util.ArrayList;
 import java.util.List;
