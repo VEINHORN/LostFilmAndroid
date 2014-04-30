@@ -123,7 +123,13 @@ public class SerialDescriptionFetcher extends LostFilmTvFetcher {
             }
 
             Seasons seasons = new Seasons();
-            int numberOfSeasonsInt = Integer.parseInt(episodes.get(0).getSeasonsNumber());
+            int numberOfSeasonsInt = 0;
+            try {
+                numberOfSeasonsInt = Integer.parseInt(episodes.get(0).getSeasonsNumber());
+            } catch(NumberFormatException e) {
+                numberOfSeasonsInt = -1; // error
+            }
+
             for(int season = 1; season <= numberOfSeasonsInt; season++) {
                 Season seasonObj = new Season();
                 seasonObj.setSeasonNumber(season);

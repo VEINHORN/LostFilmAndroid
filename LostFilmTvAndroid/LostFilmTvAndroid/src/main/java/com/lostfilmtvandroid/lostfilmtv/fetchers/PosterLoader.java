@@ -12,6 +12,7 @@ import java.io.IOException;
 /**
  * Created by veinhorn on 28.4.14.
  */
+@Deprecated
 public class PosterLoader extends LostFilmTvFetcher {
     public static String loadPosterUrl(Serial serial) {
         String posterUrl = "";
