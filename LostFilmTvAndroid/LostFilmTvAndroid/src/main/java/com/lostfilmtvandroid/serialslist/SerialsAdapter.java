@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.lostfilmtvandroid.R;
 import com.lostfilmtvandroid.lostfilmtv.entities.SerialsContainer;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by veinhorn on 28.4.14.
@@ -72,7 +71,7 @@ public class SerialsAdapter extends BaseAdapter {
 
         viewHolder.title.setText(serialsContainer.getSerial(position).getTitle());
         viewHolder.originalTitle.setText(serialsContainer.getSerial(position).getOriginalTitle());
-        Picasso.with(context).load(((SerialItem)serialsContainer.getSerial(position)).getPosterUrl()).into(viewHolder.poster);
+        //Picasso.with(context).load(((SerialItem)serialsContainer.getSerial(position)).getPosterUrl()).into(viewHolder.poster);
         return convertView;
     }
 }

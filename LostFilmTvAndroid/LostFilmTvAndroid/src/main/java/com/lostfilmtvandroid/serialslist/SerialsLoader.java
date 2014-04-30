@@ -3,9 +3,7 @@ package com.lostfilmtvandroid.serialslist;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
-import com.lostfilmtvandroid.lostfilmtv.entities.Serial;
 import com.lostfilmtvandroid.lostfilmtv.entities.SerialsContainer;
-import com.lostfilmtvandroid.lostfilmtv.fetchers.PosterLoader;
 import com.lostfilmtvandroid.lostfilmtv.fetchers.SerialsFetcher;
 
 /**
@@ -22,20 +20,7 @@ public class SerialsLoader extends AsyncTask<String, Integer, SerialsContainer> 
 
     @Override
     protected SerialsContainer doInBackground(String... params) {
-        SerialsContainer serials = SerialsFetcher.loadSerialItems();
-
-        SerialsContainer newSerialsContainer = new SerialsContainer();
-
-        for(Serial serial : serials) {
-            SerialItem serialItem = new SerialItem();
-            serialItem.setTitle(serial.getTitle());
-            serialItem.setOriginalTitle(serial.getOriginalTitle());
-            serialItem.setPageUrl(serial.getPageUrl());
-            serialItem.setPosterUrl(PosterLoader.loadPosterUrl(serial));
-
-            newSerialsContainer.addSerial(serialItem);
-        }
-        return newSerialsContainer;
+        return SerialsFetcher.loadSerialItems();
     }
 
     @Override
