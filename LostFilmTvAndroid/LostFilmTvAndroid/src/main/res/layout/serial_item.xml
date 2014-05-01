@@ -28,12 +28,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/serial_title"
             android:text="sfsfsdfsdfsdfsd"
-            android:background="#D8D8D8"/>
+            android:background="@color/even_color"/>
         <LinearLayout
             android:id="@+id/streak"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="#8E8686"
+            android:background="@color/streak_color"
             android:orientation="horizontal"
             android:layout_below="@+id/serial_title"/>
         <TextView
@@ -41,7 +41,7 @@
             android:gravity="center_horizontal"
             android:textSize="25sp"
             android:layout_width="fill_parent"
-            android:background="#CECCCC"
+            android:background="@color/row_color"
             android:text="sfsfsdfsdfsdfsd"
             android:layout_height="wrap_content"
             android:id="@+id/serial_original_title"
