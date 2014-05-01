@@ -17,7 +17,6 @@ import com.lostfilmtvandroid.serialslist.SerialsLoader;
 
 
 public class MainActivity extends ActionBarActivity {
-
     private SerialsLoader serialsLoader;
     private ListView serialsListView;
     private SerialsAdapter serialsAdapter;
@@ -48,6 +47,8 @@ public class MainActivity extends ActionBarActivity {
             }
         });*/
         testTextView = (TextView)findViewById(R.id.testtextview);
+        LostFilmFromXML lostFilmFromXML = new LostFilmFromXML();
+
         searchEditText = (EditText)findViewById(R.id.search_edit_text);
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -77,8 +78,8 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-
-        serialsLoader = new SerialsLoader(testTextView, serialsAdapter);
+        serialsLoader = new SerialsLoader(this, serialsAdapter);
         serialsLoader.execute();
+
     }
 }

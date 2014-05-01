@@ -1,32 +1,31 @@
 package com.lostfilmtvandroid.serialslist;
 
+import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.TextView;
 
+import com.lostfilmtvandroid.LostFilmFromXML;
 import com.lostfilmtvandroid.lostfilmtv.entities.SerialsContainer;
-import com.lostfilmtvandroid.lostfilmtv.fetchers.SerialsFetcher;
 
 /**
  * Created by veinhorn on 26.4.14.
  */
 public class SerialsLoader extends AsyncTask<String, Integer, SerialsContainer> {
     private SerialsAdapter serialsAdapter;
-    private TextView testTextView;
+    private Context context;
 
-    public SerialsLoader(TextView testTextView, SerialsAdapter serialsAdapter) {
-        this.testTextView = testTextView;
+    public SerialsLoader(Context context, SerialsAdapter serialsAdapter) {
+        this.context = context;
         this.serialsAdapter = serialsAdapter;
     }
 
     @Override
     protected SerialsContainer doInBackground(String... params) {
-        return SerialsFetcher.loadSerialItems();
+        return new LostFilmFromXML().loadFromXML(context);
     }
 
     @Override
     protected void onPostExecute(SerialsContainer serialsContainer) {
         serialsAdapter.setSerialsContainer(serialsContainer);
         serialsAdapter.notifyDataSetChanged();
-        testTextView.setText(Integer.toString(serialsAdapter.getSerialsContainer().size()));
     }
 }
