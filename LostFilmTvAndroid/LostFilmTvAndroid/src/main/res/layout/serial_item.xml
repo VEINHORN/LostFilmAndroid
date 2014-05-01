@@ -1,20 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
     <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/serial_poster"
+        android:src="@drawable/poster_game_of_thrones"/>
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/serial_poster"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/serial_title"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/serial_original_title"/>
-</LinearLayout>
+        android:layout_below="@+id/serial_poster"
+        android:layout_alignRight="@+id/serial_poster"
+        android:layout_alignEnd="@+id/serial_poster">
+
+        <TextView
+            android:textSize="25sp"
+            android:gravity="center_horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/serial_title"
+            android:text="sfsfsdfsdfsdfsd"
+            android:background="#D8D8D8"/>
+        <LinearLayout
+            android:id="@+id/streak"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#8E8686"
+            android:orientation="horizontal"
+            android:layout_below="@+id/serial_title"/>
+        <TextView
+            fontPath="fonts/Roboto-Thin.ttf"
+            android:gravity="center_horizontal"
+            android:textSize="25sp"
+            android:layout_width="fill_parent"
+            android:background="#CECCCC"
+            android:text="sfsfsdfsdfsdfsd"
+            android:layout_height="wrap_content"
+            android:id="@+id/serial_original_title"
+            android:layout_below="@+id/streak"/>
+    </RelativeLayout>
+
+</RelativeLayout>

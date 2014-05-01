@@ -3,28 +3,26 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
-
-    <TextView
+    <EditText
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/testtextview"/>
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/search_edit_text"/>
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:numColumns="1"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="25dp"
+        android:stretchMode="columnWidth"/>
+    <!--
     <ListView
-        android:layout_width="fill_parent"
+        android:dividerHeight="20dp"
+        android:divider="@android:color/transparent"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:id="@+id/serials_list_view"/>
-    <!--
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <br.com.dina.ui.widget.UITableView
-            android:id="@+id/uitableview"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
-    </ScrollView>
-    -->
+        -->
 </LinearLayout>

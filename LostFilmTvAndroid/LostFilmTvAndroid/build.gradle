@@ -2,7 +2,7 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion '19.0.3'
 
     defaultConfig {
         minSdkVersion 8
@@ -29,4 +29,5 @@ dependencies {
     compile files('libs/jsoup-1.7.3.jar')
     compile project(':android_uitableview')
     compile files('libs/picasso-2.2.0.jar')
+    compile 'uk.co.chrisjenx:calligraphy:0.7.0@jar'
 }
