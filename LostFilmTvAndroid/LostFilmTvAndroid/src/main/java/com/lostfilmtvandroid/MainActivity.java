@@ -3,9 +3,11 @@ package com.lostfilmtvandroid;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -30,6 +32,13 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         CalligraphyConfig.initDefault("fonts/Roboto-Light.ttf");
         setContentView(R.layout.activity_main);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        LayoutInflater inflator = LayoutInflater.from(this);
+        View view = inflator.inflate(R.layout.titleview, null);
+        actionBar.setCustomView(view);
 
         LostFilmFromXML lostFilmFromXML = new LostFilmFromXML();
 
