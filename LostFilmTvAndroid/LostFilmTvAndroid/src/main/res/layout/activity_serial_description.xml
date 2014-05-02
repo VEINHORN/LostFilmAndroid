@@ -1,49 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center">
     <ScrollView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent">
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="fill_parent"
+                android:src="@drawable/poster_game_of_thrones"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/poster_image_view"/>
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/country_text_view"/>
+                android:textSize="25sp"
+                android:text="Страна: "
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/country_text_view"
+                android:background="@color/even_color"
+                android:gravity="center"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:textSize="25sp"
+                android:text="Год: "
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/year_text_view"/>
+                android:id="@+id/year_text_view"
+                android:background="@color/row_color"
+                android:gravity="center"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:text="Жанр: "
+                android:textSize="25sp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/genre_text_view"/>
+                android:id="@+id/genre_text_view"
+                android:gravity="center"
+                android:background="@color/even_color"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:text="Количество сезонов: "
+                android:textSize="25sp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/number_of_seasons_text_view"/>
+                android:id="@+id/number_of_seasons_text_view"
+                android:background="@color/row_color"
+                android:gravity="center"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:text="Статус: "
+                android:textSize="25sp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/status_text_view"/>
+                android:id="@+id/status_text_view"
+                android:gravity="center"
+                android:background="@color/even_color"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:text="Сайт"
+                android:textSize="25sp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/home_page_text_view"/>
+                android:id="@+id/home_page_text_view"
+                android:gravity="center"
+                android:background="@color/row_color"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:text="Описание"
+                android:textSize="25sp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/description_text_view"/>
+                android:id="@+id/description_text_view"
+                android:gravity="center"
+                android:background="@color/even_color"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

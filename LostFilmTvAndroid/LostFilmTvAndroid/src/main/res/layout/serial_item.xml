@@ -20,7 +20,6 @@
         android:layout_below="@+id/serial_poster"
         android:layout_alignRight="@+id/serial_poster"
         android:layout_alignEnd="@+id/serial_poster">
-
         <TextView
             android:textSize="25sp"
             android:gravity="center_horizontal"
@@ -47,5 +46,4 @@
             android:id="@+id/serial_original_title"
             android:layout_below="@+id/streak"/>
     </RelativeLayout>
-
 </RelativeLayout>
