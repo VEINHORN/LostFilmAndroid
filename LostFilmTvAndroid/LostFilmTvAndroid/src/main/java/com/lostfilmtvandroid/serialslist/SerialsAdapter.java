@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -73,6 +74,7 @@ public class SerialsAdapter extends BaseAdapter {
 
         viewHolder.title.setText(serialsContainer.getSerial(position).getTitle());
         viewHolder.originalTitle.setText(serialsContainer.getSerial(position).getOriginalTitle());
+        viewHolder.poster.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
         Picasso.with(context).load(((SerialItem)serialsContainer.getSerial(position)).getPosterUrl()).into(viewHolder.poster);
         return convertView;
     }
