@@ -10,6 +10,8 @@
     android:paddingRight="15dp"
     android:background="@drawable/serials_list_view_selector">
     <ImageView
+        android:minHeight="270px"
+        android:minWidth="480px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/serial_poster"
@@ -21,6 +23,7 @@
         android:layout_alignRight="@+id/serial_poster"
         android:layout_alignEnd="@+id/serial_poster">
         <TextView
+            path="fonts/HelveticaNeue-UltraLight.otf"
             android:textSize="25sp"
             android:gravity="center_horizontal"
             android:layout_width="fill_parent"
@@ -36,7 +39,7 @@
             android:orientation="horizontal"
             android:layout_below="@+id/serial_title"/>
         <TextView
-            fontPath="fonts/Roboto-Thin.ttf"
+            fontPath="fonts/HelveticaNeue-UltraLight.otf"
             android:gravity="center_horizontal"
             android:textSize="25sp"
             android:layout_width="fill_parent"
