@@ -75,7 +75,7 @@ public class SerialsAdapter extends BaseAdapter {
         viewHolder.title.setText(serialsContainer.getSerial(position).getTitle());
         viewHolder.originalTitle.setText(serialsContainer.getSerial(position).getOriginalTitle());
         viewHolder.poster.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
-        Picasso.with(context).load(((SerialItem)serialsContainer.getSerial(position)).getPosterUrl()).into(viewHolder.poster);
+        Picasso.with(context).load(((SerialItem)serialsContainer.getSerial(position)).getPosterUrl()).resize(480, 270).into(viewHolder.poster);
         return convertView;
     }
 }
