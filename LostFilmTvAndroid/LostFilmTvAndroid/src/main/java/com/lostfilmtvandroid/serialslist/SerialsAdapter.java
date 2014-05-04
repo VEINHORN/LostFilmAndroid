@@ -1,10 +1,12 @@
 package com.lostfilmtvandroid.serialslist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lostfilmtvandroid.R;
+import com.lostfilmtvandroid.SerialDescriptionActivity;
 import com.lostfilmtvandroid.lostfilmtv.entities.Serial;
 import com.lostfilmtvandroid.lostfilmtv.entities.SerialItem;
 import com.lostfilmtvandroid.lostfilmtv.entities.SerialsContainer;
@@ -45,7 +48,7 @@ public class SerialsAdapter extends BaseAdapter implements Filterable {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.serialsContainer = serialsContainer;
-        this.gridView =gridView;
+        this.gridView = gridView;
     }
 
     @Override
@@ -67,21 +70,21 @@ public class SerialsAdapter extends BaseAdapter implements Filterable {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
 
-        if(convertView == null) {
+        if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.serial_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.title = (TextView)convertView.findViewById(R.id.serial_title);
-            viewHolder.originalTitle = (TextView)convertView.findViewById(R.id.serial_original_title);
-            viewHolder.poster = (ImageView)convertView.findViewById(R.id.serial_poster);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.serial_title);
+            viewHolder.originalTitle = (TextView) convertView.findViewById(R.id.serial_original_title);
+            viewHolder.poster = (ImageView) convertView.findViewById(R.id.serial_poster);
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder)convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
         viewHolder.title.setText(serialsContainer.getSerial(position).getTitle());
         viewHolder.originalTitle.setText(serialsContainer.getSerial(position).getOriginalTitle());
         viewHolder.poster.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
-        Picasso.with(context).load(((SerialItem)serialsContainer.getSerial(position)).getPosterUrl()).resize(480, 270).into(viewHolder.poster);
+        Picasso.with(context).load(((SerialItem) serialsContainer.getSerial(position)).getPosterUrl()).resize(480, 270).into(viewHolder.poster);
         return convertView;
     }
 
@@ -92,12 +95,22 @@ public class SerialsAdapter extends BaseAdapter implements Filterable {
             protected FilterResults performFiltering(CharSequence constraint) {
                 constraint = constraint.toString().toLowerCase();
                 FilterResults filterResults = new FilterResults();
-                if(constraint != null && constraint.length() > 0) {
+                if (constraint != null && constraint.length() > 0) {
                     SerialsContainer filteredSerialsContainer = new SerialsContainer();
-                    for(Serial serial : serialsContainer) {
-                        if(serial.getTitle().length() >= constraint.length()) {
-                            if(serial.getTitle().substring(0, constraint.length()).toLowerCase().contains(constraint)) {
+                    for (Serial serial : serialsContainer) {
+                        if (serial.getTitle().length() >= constraint.length()) {
+                            if (serial.getTitle().substring(0, constraint.length()).toLowerCase().contains(constraint)) {
                                 filteredSerialsContainer.addSerial(serial);
+                            }
+                        }
+                    }
+                    // for english title
+                    if (filteredSerialsContainer.size() == 0) {
+                        for (Serial serial : serialsContainer) {
+                            if (serial.getOriginalTitle().length() >= constraint.length()) {
+                                if (serial.getOriginalTitle().substring(0, constraint.length()).toLowerCase().contains(constraint)) {
+                                    filteredSerialsContainer.addSerial(serial);
+                                }
                             }
                         }
                     }
@@ -111,8 +124,17 @@ public class SerialsAdapter extends BaseAdapter implements Filterable {
             }
 
             @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                gridView.setAdapter(new SerialsAdapter(context, (SerialsContainer)results.values, gridView));
+            protected void publishResults(final CharSequence constraint, FilterResults results) {
+                final SerialsContainer newSerialsContainer = (SerialsContainer) results.values;
+                gridView.setAdapter(new SerialsAdapter(context, newSerialsContainer, gridView));
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(context, SerialDescriptionActivity.class);
+                        intent.putExtra("serialUrl", newSerialsContainer.getSerial(position).getPageUrl());
+                        context.startActivity(intent);
+                    }
+                });
             }
         };
     }
