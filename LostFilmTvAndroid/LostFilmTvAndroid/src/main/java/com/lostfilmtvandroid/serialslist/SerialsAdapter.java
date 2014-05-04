@@ -87,36 +87,33 @@ public class SerialsAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public Filter getFilter() {
-        // here i can return anonymus object later
-        return new TitleFilter();
-    }
-
-    public class TitleFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            constraint = constraint.toString().toLowerCase();
-            FilterResults filterResults = new FilterResults();
-            if(constraint != null && constraint.length() > 0) {
-                SerialsContainer filteredSerialsContainer = new SerialsContainer();
-                for(Serial serial : serialsContainer) {
-                    if(serial.getTitle().toLowerCase().contains(constraint)) {
-                        filteredSerialsContainer.addSerial(serial);
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                constraint = constraint.toString().toLowerCase();
+                FilterResults filterResults = new FilterResults();
+                if(constraint != null && constraint.length() > 0) {
+                    SerialsContainer filteredSerialsContainer = new SerialsContainer();
+                    for(Serial serial : serialsContainer) {
+                        if(serial.getTitle().length() >= constraint.length()) {
+                            if(serial.getTitle().substring(0, constraint.length()).toLowerCase().contains(constraint)) {
+                                filteredSerialsContainer.addSerial(serial);
+                            }
+                        }
                     }
+                    filterResults.count = filteredSerialsContainer.size();
+                    filterResults.values = filteredSerialsContainer;
+                } else {
+                    filterResults.count = serialsContainer.size();
+                    filterResults.values = serialsContainer;
                 }
-                filterResults.count = filteredSerialsContainer.size();
-                filterResults.values = filteredSerialsContainer;
-            } else {
-                filterResults.count = serialsContainer.size();
-                filterResults.values = serialsContainer;
+                return filterResults;
             }
-            return filterResults;
-        }
 
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            SerialsContainer newSerialsContainer = (SerialsContainer)results.values;
-            SerialsAdapter serialsAdapter = new SerialsAdapter(context, newSerialsContainer, gridView);
-            gridView.setAdapter(serialsAdapter);
-        }
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                gridView.setAdapter(new SerialsAdapter(context, (SerialsContainer)results.values, gridView));
+            }
+        };
     }
 }
