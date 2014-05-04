@@ -6,10 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lostfilmtvandroid.R;
+import com.lostfilmtvandroid.lostfilmtv.entities.Serial;
 import com.lostfilmtvandroid.lostfilmtv.entities.SerialItem;
 import com.lostfilmtvandroid.lostfilmtv.entities.SerialsContainer;
 import com.squareup.picasso.Picasso;
@@ -17,7 +21,7 @@ import com.squareup.picasso.Picasso;
 /**
  * Created by veinhorn on 28.4.14.
  */
-public class SerialsAdapter extends BaseAdapter {
+public class SerialsAdapter extends BaseAdapter implements Filterable {
     private static class ViewHolder {
         public TextView title;
         public TextView originalTitle;
@@ -27,6 +31,7 @@ public class SerialsAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private SerialsContainer serialsContainer;
     private Context context;
+    private GridView gridView;
 
     public SerialsContainer getSerialsContainer() {
         return serialsContainer;
@@ -36,10 +41,11 @@ public class SerialsAdapter extends BaseAdapter {
         this.serialsContainer = serialsContainer;
     }
 
-    public SerialsAdapter(Context context, SerialsContainer serialsContainer) {
+    public SerialsAdapter(Context context, SerialsContainer serialsContainer, GridView gridView) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.serialsContainer = serialsContainer;
+        this.gridView =gridView;
     }
 
     @Override
@@ -77,5 +83,40 @@ public class SerialsAdapter extends BaseAdapter {
         viewHolder.poster.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
         Picasso.with(context).load(((SerialItem)serialsContainer.getSerial(position)).getPosterUrl()).resize(480, 270).into(viewHolder.poster);
         return convertView;
+    }
+
+    @Override
+    public Filter getFilter() {
+        // here i can return anonymus object later
+        return new TitleFilter();
+    }
+
+    public class TitleFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            constraint = constraint.toString().toLowerCase();
+            FilterResults filterResults = new FilterResults();
+            if(constraint != null && constraint.length() > 0) {
+                SerialsContainer filteredSerialsContainer = new SerialsContainer();
+                for(Serial serial : serialsContainer) {
+                    if(serial.getTitle().toLowerCase().contains(constraint)) {
+                        filteredSerialsContainer.addSerial(serial);
+                    }
+                }
+                filterResults.count = filteredSerialsContainer.size();
+                filterResults.values = filteredSerialsContainer;
+            } else {
+                filterResults.count = serialsContainer.size();
+                filterResults.values = serialsContainer;
+            }
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            SerialsContainer newSerialsContainer = (SerialsContainer)results.values;
+            SerialsAdapter serialsAdapter = new SerialsAdapter(context, newSerialsContainer, gridView);
+            gridView.setAdapter(serialsAdapter);
+        }
     }
 }

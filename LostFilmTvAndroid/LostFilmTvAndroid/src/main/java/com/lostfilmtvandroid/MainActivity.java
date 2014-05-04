@@ -51,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                serialsAdapter.getFilter().filter(s);
             }
 
             @Override
@@ -61,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
         });
 
         gridView = (GridView)findViewById(R.id.gridview);
-        serialsAdapter = new SerialsAdapter(this, new SerialsContainer());
+        serialsAdapter = new SerialsAdapter(this, new SerialsContainer(), gridView);
         gridView.setAdapter(serialsAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
