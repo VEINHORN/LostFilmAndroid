@@ -21,10 +21,14 @@ import com.lostfilmtvandroid.lostfilmtv.entities.SerialItem;
 import com.lostfilmtvandroid.lostfilmtv.entities.SerialsContainer;
 import com.squareup.picasso.Picasso;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by veinhorn on 28.4.14.
  */
 public class SerialsAdapter extends BaseAdapter implements Filterable {
+    private final static String RU_REGEXP = "[а-я ]+";
     private static class ViewHolder {
         public TextView title;
         public TextView originalTitle;
@@ -94,22 +98,34 @@ public class SerialsAdapter extends BaseAdapter implements Filterable {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 constraint = constraint.toString().toLowerCase();
+                boolean langFlag = false; // if false -- its English
+                Pattern pattern = Pattern.compile(RU_REGEXP);
+                Matcher matcher = pattern.matcher(constraint);
+                while(matcher.find()) {
+                    if(matcher.group().equals(constraint)) {
+                        langFlag = true;
+                    }
+                }
+
                 FilterResults filterResults = new FilterResults();
+
                 if (constraint != null && constraint.length() > 0) {
                     SerialsContainer filteredSerialsContainer = new SerialsContainer();
-                    for (Serial serial : serialsContainer) {
-                        if (serial.getTitle().length() >= constraint.length()) {
-                            if (serial.getTitle().substring(0, constraint.length()).toLowerCase().contains(constraint)) {
-                                filteredSerialsContainer.addSerial(serial);
+                    if(langFlag) { // if ru string
+                        for (Serial serial : serialsContainer) {
+                            if (serial.getTitle().length() >= constraint.length()) {
+                                if (serial.getTitle().substring(0, constraint.length()).toLowerCase().contains(constraint)) {
+                                    filteredSerialsContainer.addSerial(serial);
+                                }
                             }
                         }
-                    }
-                    // for english title
-                    if (filteredSerialsContainer.size() == 0) {
-                        for (Serial serial : serialsContainer) {
-                            if (serial.getOriginalTitle().length() >= constraint.length()) {
-                                if (serial.getOriginalTitle().substring(0, constraint.length()).toLowerCase().contains(constraint)) {
-                                    filteredSerialsContainer.addSerial(serial);
+                    } else {// if en string
+                        if (filteredSerialsContainer.size() == 0) {
+                            for (Serial serial : serialsContainer) {
+                                if (serial.getOriginalTitle().length() >= constraint.length()) {
+                                    if (serial.getOriginalTitle().substring(0, constraint.length()).toLowerCase().contains(constraint)) {
+                                        filteredSerialsContainer.addSerial(serial);
+                                    }
                                 }
                             }
                         }
