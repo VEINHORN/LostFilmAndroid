@@ -19,6 +19,5 @@
         android:layout_height="fill_parent"
         android:numColumns="1"
         android:verticalSpacing="10dp"
-        android:horizontalSpacing="25dp"
         android:stretchMode="columnWidth"/>
 </LinearLayout>
