@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix"
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
     android:layout_gravity="center">
     <ScrollView
+        android:scrollbars="none"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent">
         <LinearLayout
@@ -13,28 +18,29 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
             <ImageView
-                android:src="@drawable/poster_game_of_thrones"
+                android:minHeight="270px"
+                android:minWidth="480px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/poster_image_view"/>
             <TextView
+                fontPath="fonts/HelveticaNeue-UltraLight.otf"
                 android:textSize="25sp"
-                android:text="Страна: "
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/country_text_view"
                 android:background="@color/even_color"
                 android:gravity="center"/>
             <TextView
+                fontPath="fonts/HelveticaNeue-UltraLight.otf"
                 android:textSize="25sp"
-                android:text="Год: "
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/year_text_view"
                 android:background="@color/row_color"
                 android:gravity="center"/>
             <TextView
-                android:text="Жанр: "
+                fontPath="fonts/HelveticaNeue-UltraLight.otf"
                 android:textSize="25sp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +48,7 @@
                 android:gravity="center"
                 android:background="@color/even_color"/>
             <TextView
-                android:text="Количество сезонов: "
+                fontPath="fonts/HelveticaNeue-UltraLight.otf"
                 android:textSize="25sp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -50,7 +56,7 @@
                 android:background="@color/row_color"
                 android:gravity="center"/>
             <TextView
-                android:text="Статус: "
+                fontPath="fonts/HelveticaNeue-UltraLight.otf"
                 android:textSize="25sp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -58,21 +64,13 @@
                 android:gravity="center"
                 android:background="@color/even_color"/>
             <TextView
-                android:text="Сайт"
-                android:textSize="25sp"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/home_page_text_view"
-                android:gravity="center"
-                android:background="@color/row_color"/>
-            <TextView
-                android:text="Описание"
+                fontPath="fonts/HelveticaNeue-UltraLight.otf"
                 android:textSize="25sp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/description_text_view"
                 android:gravity="center"
-                android:background="@color/even_color"/>
+                android:background="@color/row_color"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
