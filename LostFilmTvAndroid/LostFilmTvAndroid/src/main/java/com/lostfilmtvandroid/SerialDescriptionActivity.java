@@ -2,7 +2,10 @@ package com.lostfilmtvandroid;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +25,8 @@ public class SerialDescriptionActivity extends ActionBarActivity {
     private TextView statusTextView;
     private TextView serialDescriptionTextView;
 
+    private TextView titleActionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +34,17 @@ public class SerialDescriptionActivity extends ActionBarActivity {
         setContentView(R.layout.activity_serial_description);
 
         String serialUrl = getIntent().getStringExtra("serialUrl");
+        String serialDescription = getIntent().getStringExtra("serialTitle");
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View view = layoutInflater.inflate(R.layout.serial_description_action_bar_view, null);
+        titleActionBar = (TextView)view.findViewById(R.id.serial_description_activity_action_bar_text_view);
+        titleActionBar.setText(serialDescription);
+        actionBar.setCustomView(view);
+
         posterImageView = (ImageView)findViewById(R.id.poster_image_view);
         countryTextView = (TextView)findViewById(R.id.country_text_view);
         yearTextView = (TextView)findViewById(R.id.year_text_view);

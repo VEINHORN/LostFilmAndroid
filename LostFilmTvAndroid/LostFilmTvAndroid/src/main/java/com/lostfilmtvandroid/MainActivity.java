@@ -36,8 +36,8 @@ public class MainActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-        LayoutInflater inflator = LayoutInflater.from(this);
-        View view = inflator.inflate(R.layout.titleview, null);
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View view = layoutInflater.inflate(R.layout.main_activity_action_bar_view, null);
         actionBar.setCustomView(view);
 
         LostFilmFromXML lostFilmFromXML = new LostFilmFromXML();
@@ -68,6 +68,7 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, SerialDescriptionActivity.class);
                 intent.putExtra("serialUrl", serialsAdapter.getSerialsContainer().getSerial(position).getPageUrl());
+                intent.putExtra("serialTitle", serialsAdapter.getSerialsContainer().getSerial(position).getTitle());
                 startActivity(intent);
             }
         });

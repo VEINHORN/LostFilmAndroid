@@ -148,6 +148,7 @@ public class SerialsAdapter extends BaseAdapter implements Filterable {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(context, SerialDescriptionActivity.class);
                         intent.putExtra("serialUrl", newSerialsContainer.getSerial(position).getPageUrl());
+                        intent.putExtra("serialTitle", newSerialsContainer.getSerial(position).getTitle());
                         context.startActivity(intent);
                     }
                 });
