@@ -21,6 +21,7 @@ import com.lostfilmtvandroid.lostfilmtv.entities.SerialItem;
 import com.lostfilmtvandroid.lostfilmtv.entities.SerialsContainer;
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -148,7 +149,12 @@ public class SerialsAdapter extends BaseAdapter implements Filterable {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(context, SerialDescriptionActivity.class);
                         intent.putExtra("serialUrl", newSerialsContainer.getSerial(position).getPageUrl());
-                        intent.putExtra("serialTitle", newSerialsContainer.getSerial(position).getTitle());
+                        if(Locale.getDefault().getLanguage().equals("ru")) {
+                            intent.putExtra("serialTitle", newSerialsContainer.getSerial(position).getTitle());
+                        } else {
+                            intent.putExtra("serialTitle", newSerialsContainer.getSerial(position).getOriginalTitle());
+                        }
+
                         context.startActivity(intent);
                     }
                 });

@@ -17,6 +17,8 @@ import com.lostfilmtvandroid.lostfilmtv.entities.SerialsContainer;
 import com.lostfilmtvandroid.serialslist.SerialsAdapter;
 import com.lostfilmtvandroid.serialslist.SerialsLoader;
 
+import java.util.Locale;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -68,7 +70,11 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, SerialDescriptionActivity.class);
                 intent.putExtra("serialUrl", serialsAdapter.getSerialsContainer().getSerial(position).getPageUrl());
-                intent.putExtra("serialTitle", serialsAdapter.getSerialsContainer().getSerial(position).getTitle());
+                if(Locale.getDefault().getLanguage().equals("ru")) {
+                    intent.putExtra("serialTitle", serialsAdapter.getSerialsContainer().getSerial(position).getTitle());
+                } else {
+                    intent.putExtra("serialTitle", serialsAdapter.getSerialsContainer().getSerial(position).getOriginalTitle());
+                }
                 startActivity(intent);
             }
         });
