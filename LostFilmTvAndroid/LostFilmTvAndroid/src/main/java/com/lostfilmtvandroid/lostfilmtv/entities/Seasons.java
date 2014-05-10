@@ -1,6 +1,7 @@
 package com.lostfilmtvandroid.lostfilmtv.entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,5 +25,9 @@ public class Seasons implements Iterable<Season> {
 
     public Iterator<Season> iterator() {
         return seasons.iterator();
+    }
+
+    public void reverse() {
+        Collections.reverse(seasons);
     }
 }

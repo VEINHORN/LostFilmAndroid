@@ -1,9 +1,6 @@
 package br.com.dina.ui.widget;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -12,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.dina.ui.R;
 import br.com.dina.ui.model.BasicItem;
 import br.com.dina.ui.model.IListItem;
@@ -39,7 +40,6 @@ public class UITableView extends LinearLayout {
 	/**
 	 * 
 	 * @param title
-	 * @param summary
 	 */
 	public void addBasicItem(String title) {
 		mItemList.add(new BasicItem(title));
@@ -103,6 +103,10 @@ public class UITableView extends LinearLayout {
             mIndexController--;
         }
         commit();
+    }
+
+    public BasicItem getBasicItem(int position) {
+        return (BasicItem)mItemList.get(position);
     }
 	
 	/**

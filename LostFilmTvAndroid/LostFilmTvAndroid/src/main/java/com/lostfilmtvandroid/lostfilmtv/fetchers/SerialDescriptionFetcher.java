@@ -142,7 +142,7 @@ public class SerialDescriptionFetcher extends LostFilmTvFetcher {
 
                     }
                 }
-                seasonObj.reverse();
+                //seasonObj.reverse();
                 seasons.addSeason(seasonObj);
             }
 
@@ -157,6 +157,7 @@ public class SerialDescriptionFetcher extends LostFilmTvFetcher {
             serialItemDescription.setStatus(status);
             serialItemDescription.setOfficialPage(officialPage);
 
+            seasons.reverse();
             serialItemDescription.setSeasons(seasons);
         } catch(IOException e) {
 

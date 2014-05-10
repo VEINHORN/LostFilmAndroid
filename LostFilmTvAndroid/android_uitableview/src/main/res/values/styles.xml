@@ -17,8 +17,8 @@
 		<item name="android:focusable">true</item>
 		<item name="android:paddingTop">10dip</item>
 		<item name="android:paddingBottom">10dip</item>
-		<item name="android:paddingLeft">10dip</item>
-    	<item name="android:paddingRight">10dip</item>
+        <item name="android:paddingLeft">10dip</item>
+        <item name="android:paddingRight">10dip</item>
     	<item name="android:gravity">center_vertical</item>
     	<item name="android:background">@drawable/background_view_rounded_top</item>
 	</style>
@@ -27,8 +27,8 @@
 		<item name="android:clickable">true</item>
 		<item name="android:paddingTop">10dip</item>
 		<item name="android:paddingBottom">10dip</item>
-		<item name="android:paddingLeft">10dip</item>
-    	<item name="android:paddingRight">10dip</item>
+        <item name="android:paddingLeft">10dip</item>
+        <item name="android:paddingRight">10dip</item>
     	<item name="android:gravity">center_vertical</item>
     	<item name="android:background">@drawable/background_view_rounded_middle</item>
 	</style>
