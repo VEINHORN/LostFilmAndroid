@@ -28,6 +28,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('libs/jsoup-1.7.3.jar')
     compile project(':android_uitableview')
+    compile project(':QustomDialog')
     compile files('libs/picasso-2.2.0.jar')
     compile 'uk.co.chrisjenx:calligraphy:0.7.0@jar'
 }
