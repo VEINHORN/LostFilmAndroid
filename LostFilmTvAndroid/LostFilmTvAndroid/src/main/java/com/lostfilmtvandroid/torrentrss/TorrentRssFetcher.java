@@ -56,10 +56,10 @@ public class TorrentRssFetcher {
         return serialsContainer;
     }
 
-    public static EpisodesContainer getEpisodes() {
+    public static EpisodesContainer getEpisodes(String serialTitle) {
         EpisodesContainer episodesContainer = new EpisodesContainer();
         try {
-            Document document = Jsoup.connect(fetchSerials().searchUrl("Dexter")).get();
+            Document document = Jsoup.connect(fetchSerials().searchUrl(serialTitle)).get();
             Elements episodes = document.getElementById("block_main").getElementsByAttributeValue("itemprop", "episode");
             for(Element element : episodes) {
                 Episode episode = new Episode();

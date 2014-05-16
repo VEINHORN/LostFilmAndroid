@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lostfilmtvandroid.lostfilmtv.entities.Episode;
 import com.lostfilmtvandroid.lostfilmtv.entities.Season;
@@ -78,7 +77,9 @@ public class SerialDescriptionLoader extends AsyncTask<String, Integer, SerialDe
             episodesTable.setClickListener(new UITableView.ClickListener() {
                 @Override
                 public void onClick(int index) {
-                    Toast.makeText(activity, episodesTable.getBasicItem(index).getTitle(), Toast.LENGTH_SHORT).show();
+                    String episodeTitle= episodesTable.getBasicItem(index).getTitle();
+                    TorrentFetcher torrentFetcher = new TorrentFetcher(activity, serialDescription.getTitle(), episodeTitle);
+                    torrentFetcher.execute();
                 }
             });
             serialDescriptionLayout.addView(seasonView);

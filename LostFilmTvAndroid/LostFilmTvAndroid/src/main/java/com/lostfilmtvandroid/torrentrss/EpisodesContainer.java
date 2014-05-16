@@ -28,4 +28,25 @@ public class EpisodesContainer {
         }
         return str;
     }
+
+    public String[] searchTorrentLinks(String episodeTitle) {
+        String links[] = new String [2];
+        for(Episode episode : episodes) {
+            if(episode.getTitle().toLowerCase().contains(episodeTitle.toLowerCase())) {
+                links[0] = episode.getTorrentLink();
+                links[1] = episode.getHqTorrentLink();
+            }
+        }
+        return links;
+    }
+
+    public boolean isSuchEpisode(String episodeTitle) {
+        boolean flag = false;
+        for(Episode episode : episodes) {
+            if(episode.getTitle().toLowerCase().contains(episodeTitle.toLowerCase())) {
+                flag = true;
+            }
+        }
+        return flag;
+    }
 }
