@@ -9,6 +9,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/LostFilmTvAndroid" />
+            <option value="$PROJECT_DIR$/PSGradientButtons" />
+            <option value="$PROJECT_DIR$/QustomDialog" />
             <option value="$PROJECT_DIR$/android_uitableview" />
           </set>
         </option>

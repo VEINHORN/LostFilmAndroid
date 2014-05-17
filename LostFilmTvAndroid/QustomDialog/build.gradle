@@ -1,11 +1,11 @@
-apply plugin: 'android'
+apply plugin: 'android-library'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    buildToolsVersion "19.0.3"
 
     defaultConfig {
-        minSdkVersion 8
+        minSdkVersion 7
         targetSdkVersion 19
         versionCode 1
         versionName "1.0"
@@ -24,12 +24,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile files('libs/jsoup-1.7.3.jar')
-    compile project(':android_uitableview')
-    compile project(':QustomDialog')
-    compile project(':PSGradientButtons')
-    compile files('libs/picasso-2.2.0.jar')
-    compile 'uk.co.chrisjenx:calligraphy:0.7.0@jar'
+    compile 'com.android.support:appcompat-v7:19.+'
 }

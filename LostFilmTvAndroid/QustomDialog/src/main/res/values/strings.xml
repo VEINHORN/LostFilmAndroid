@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="app_name">Custom Dialog Example</string>
+    <string name="_1st_button_text">Custom dialog with message, custom View and Items</string>
+    <string name="_2nd_button_text">Custom dialog with message and items</string>
+    <string name="_3rd_button_text">Custom dialog with disabled items</string>
+    <string name="alert_image_content_description">Alert Image</string>
+    <string name="ip_address_text">IP address</string>
+    <string name="ip_address_hint">0.0.0.0</string>
+    <string name="_4th_button_text">Custom dialog with single choice items and adapter</string>
+
+</resources>
