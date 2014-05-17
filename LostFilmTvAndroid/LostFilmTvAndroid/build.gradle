@@ -32,4 +32,5 @@ dependencies {
     compile project(':PSGradientButtons')
     compile files('libs/picasso-2.2.0.jar')
     compile 'uk.co.chrisjenx:calligraphy:0.7.0@jar'
+    compile files('libs/bitlet-1.0-SNAPSHOT.jar')
 }

@@ -40,22 +40,39 @@ public class TorrentFetcher extends AsyncTask<String, String, EpisodesContainer>
     protected void onPostExecute(EpisodesContainer episodesContainer) {
         progressDialog.hide();
         if(episodesContainer.isSuchEpisode(episodeTitle)) {
+            final String[] torrents = episodesContainer.searchTorrentLinks(episodeTitle);
+
             QustomDialogBuilder qustomDialogBuilder = new QustomDialogBuilder(activity)
                     .setTitle("Download torrent")
                     .setMessage("Select the torrent quality and start downloading")
-                    .setCustomView(R.layout.torrent_buttons, activity)
-                    .setTitleColor("#FF00FF")
-                    .setDividerColor("#FF00FF");
+                    .setCustomView(R.layout.torrent_buttons, activity);
             qustomDialogBuilder.show();
             TextView hqTorrentButton = (TextView)qustomDialogBuilder.getDialogView().findViewById(R.id.hq_torrent_button);
-            hqTorrentButton.setOnClickListener(new View.OnClickListener() {
+            TextView torrentButton = (TextView)qustomDialogBuilder.getDialogView().findViewById(R.id.torrent_button);
+
+            torrentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(activity, "Text", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, torrents[0], Toast.LENGTH_SHORT).show();
                 }
             });
+
+            // Checking for hq torrent
+            if(!torrents[1].equals("")) {
+                hqTorrentButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(activity, torrents[1], Toast.LENGTH_SHORT).show();
+                        TorrentFileDownloader downloader = new TorrentFileDownloader(torrents[1], episodeTitle);
+                        downloader.execute();
+                        //Log.d("My Path", Environment.getExternalStorageDirectory().getAbsolutePath());
+                    }
+                });
+            } else {
+                hqTorrentButton.setBackgroundResource(R.drawable.ps__button_github);
+            }
         } else {
-            Toast.makeText(activity, "false", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "No such episode", Toast.LENGTH_SHORT).show();
         }
     }
 }

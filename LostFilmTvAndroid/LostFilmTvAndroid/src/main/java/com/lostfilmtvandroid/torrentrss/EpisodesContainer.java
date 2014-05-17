@@ -30,7 +30,7 @@ public class EpisodesContainer {
     }
 
     public String[] searchTorrentLinks(String episodeTitle) {
-        String links[] = new String [2];
+        String links[] = new String [2];// links[0] = ""; links[1] = "";
         for(Episode episode : episodes) {
             if(episode.getTitle().toLowerCase().contains(episodeTitle.toLowerCase())) {
                 links[0] = episode.getTorrentLink();
