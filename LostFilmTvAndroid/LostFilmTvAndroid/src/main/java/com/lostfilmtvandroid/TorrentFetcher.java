@@ -63,7 +63,7 @@ public class TorrentFetcher extends AsyncTask<String, String, EpisodesContainer>
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(activity, torrents[1], Toast.LENGTH_SHORT).show();
-                        TorrentFileDownloader downloader = new TorrentFileDownloader(torrents[1], episodeTitle);
+                        TorrentFileDownloader downloader = new TorrentFileDownloader(activity, torrents[1], episodeTitle);
                         downloader.execute();
                         //Log.d("My Path", Environment.getExternalStorageDirectory().getAbsolutePath());
                     }

@@ -1,5 +1,6 @@
 package com.lostfilmtvandroid;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -18,10 +19,12 @@ import java.net.URLConnection;
  * Created by veinhorn on 17.5.14.
  */
 public class TorrentFileDownloader extends AsyncTask<String, Integer, File[]> {
+    Activity activity;
     private String urlString;
     private String episodeTitle;
 
-    public TorrentFileDownloader(String urlString, String episodeTitle) {
+    public TorrentFileDownloader(Activity activity, String urlString, String episodeTitle) {
+        this.activity = activity;
         this.urlString = urlString;
         this.episodeTitle = episodeTitle;
     }
@@ -81,7 +84,7 @@ public class TorrentFileDownloader extends AsyncTask<String, Integer, File[]> {
 
     @Override
     protected void onPostExecute(File[] files) {
-        TorrentDownloader torrentDownloader = new TorrentDownloader(files);
+        TorrentDownloader torrentDownloader = new TorrentDownloader(activity, files);
         torrentDownloader.execute();
     }
 }
