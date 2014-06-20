@@ -19,22 +19,25 @@ import com.lostfilmtvandroid.serialslist.SerialsLoader;
 
 import java.util.Locale;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnItemClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-
 public class MainActivity extends ActionBarActivity {
-    private SerialsLoader serialsLoader;
-    private GridView gridView;
+    @InjectView(R.id.gridview) GridView gridView;
+    @InjectView(R.id.search_edit_text) EditText searchEditText;
     private SerialsAdapter serialsAdapter;
-    private EditText searchEditText;
+    private SerialsLoader serialsLoader;
+    private LostFilmFromXML lostFilmFromXML = new LostFilmFromXML();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         CalligraphyConfig.initDefault("fonts/Roboto-Light.ttf");
         setContentView(R.layout.activity_main);
-
+        ButterKnife.inject(this);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
@@ -42,49 +45,34 @@ public class MainActivity extends ActionBarActivity {
         View view = layoutInflater.inflate(R.layout.main_activity_action_bar_view, null);
         actionBar.setCustomView(view);
 
-        LostFilmFromXML lostFilmFromXML = new LostFilmFromXML();
-
-        searchEditText = (EditText)findViewById(R.id.search_edit_text);
         searchEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
                 serialsAdapter.getFilter().filter(s);
             }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            @Override public void afterTextChanged(Editable s) { }
         });
 
-        gridView = (GridView)findViewById(R.id.gridview);
         serialsAdapter = new SerialsAdapter(this, new SerialsContainer(), gridView);
         gridView.setAdapter(serialsAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, SerialDescriptionActivity.class);
-                intent.putExtra("serialUrl", serialsAdapter.getSerialsContainer().getSerial(position).getPageUrl());
-                if(Locale.getDefault().getLanguage().equals("ru")) {
-                    intent.putExtra("serialTitle", serialsAdapter.getSerialsContainer().getSerial(position).getTitle());
-                } else {
-                    intent.putExtra("serialTitle", serialsAdapter.getSerialsContainer().getSerial(position).getOriginalTitle());
-                }
-                startActivity(intent);
-            }
-        });
         serialsLoader = new SerialsLoader(this, serialsAdapter);
         serialsLoader.execute();
-
     }
 
-    @Override
-    protected void attachBaseContext(Context context) {
+    @OnItemClick(R.id.gridview) public void onClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(MainActivity.this, SerialDescriptionActivity.class);
+        intent.putExtra("serialUrl", serialsAdapter.getSerialsContainer().getSerial(position).getPageUrl());
+        if(Locale.getDefault().getLanguage().equals("ru")) {
+            intent.putExtra("serialTitle", serialsAdapter.getSerialsContainer().getSerial(position).getTitle());
+        } else {
+            intent.putExtra("serialTitle", serialsAdapter.getSerialsContainer().getSerial(position).getOriginalTitle());
+        }
+        startActivity(intent);
+    }
+
+    @Override protected void attachBaseContext(Context context) {
         super.attachBaseContext(new CalligraphyContextWrapper(context, R.attr.fontPath));
     }
 }

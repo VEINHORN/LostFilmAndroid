@@ -6,6 +6,8 @@ package com.lostfilmtvandroid;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.qustom.dialog.QustomDialogBuilder;
@@ -23,6 +25,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 
 /**
  * Created by veinhorn on 3.5.14.
@@ -31,35 +36,31 @@ public class TorrentDownloader extends AsyncTask<String, String, String> {
     private Activity activity;
     private File[] files;
     private QustomDialogBuilder qustomDialogBuilder;
-    private TextView downloadedTextView;
-    private TextView seedersTextView;
-    private TextView peersTextView;
+    @InjectView(R.id.downloaded_text_view) TextView downloadedTextView;
+    @InjectView(R.id.seeders_text_view) TextView seedersTextView;
+    @InjectView(R.id.peers_text_view) TextView peersTextView;
 
     public TorrentDownloader(Activity activity, File[] files) {
         this.activity = activity;
         this.files = files;
     }
 
-    @Override
-    protected void onPreExecute() {
+    @Override protected void onPreExecute() {
         qustomDialogBuilder = new QustomDialogBuilder(activity)
                 .setTitle("Downloading")
                 .setCustomView(R.layout.downloading_dialog, activity);
-        downloadedTextView = (TextView)qustomDialogBuilder.getDialogView().findViewById(R.id.downloaded_text_view);
-        seedersTextView = (TextView)qustomDialogBuilder.getDialogView().findViewById(R.id.seeders_text_view);
-        peersTextView = (TextView)qustomDialogBuilder.getDialogView().findViewById(R.id.peers_text_view);
+        View dialogView = qustomDialogBuilder.getDialogView();
+        ButterKnife.inject(this, dialogView);
         qustomDialogBuilder.show();
     }
 
-    @Override
-    protected void onProgressUpdate(String... vars) {
+    @Override protected void onProgressUpdate(String... vars) {
         downloadedTextView.setText("Downloaded: " + vars[0] + "/" + vars[1]);
         peersTextView.setText("Peers: " + vars[2]);
         seedersTextView.setText("Seeds: " + vars[3]);
     }
 
-    @Override
-    protected String doInBackground(String... params) {
+    @Override protected String doInBackground(String... params) {
         try {
             //File torrentFile = new File(context.getExternalFilesDir(null).getAbsolutePath() + "/gameofthrones.torrent");
             Metafile metafile = new Metafile(new BufferedInputStream(new FileInputStream(files[1])));
@@ -74,7 +75,8 @@ public class TorrentDownloader extends AsyncTask<String, String, String> {
             while (!torrent.isCompleted()) {
                 try {
                     Thread.sleep(1000);
-                } catch(InterruptedException ie) {
+                } catch(InterruptedException e) {
+                    Log.e(TorrentDownloader.class.getName(), e.getMessage(), e);
                     break;
                 }
                 torrent.tick();
@@ -84,17 +86,17 @@ public class TorrentDownloader extends AsyncTask<String, String, String> {
                 //downloadedString = Long.toString(torrent.getPeersManager().getDownloaded());
             }
         } catch(FileNotFoundException e) {
-
+            Log.e(TorrentDownloader.class.getName(), e.getMessage(), e);
         } catch(NoSuchAlgorithmException e) {
-
+            Log.e(TorrentDownloader.class.getName(), e.getMessage(), e);
         } catch(IOException e) {
-
+            Log.e(TorrentDownloader.class.getName(), e.getMessage(), e);
         }
         return "";
     }
 
-    @Override
-    protected void onPostExecute(String str) {
+
+    @Override protected void onPostExecute(String str) {
         //qustomDialogBuilder.getDialo
     }
 }

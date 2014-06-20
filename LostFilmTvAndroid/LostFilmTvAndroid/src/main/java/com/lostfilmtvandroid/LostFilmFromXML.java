@@ -2,6 +2,7 @@ package com.lostfilmtvandroid;
 
 import android.content.Context;
 import android.content.res.XmlResourceParser;
+import android.util.Log;
 
 import com.lostfilmtvandroid.lostfilmtv.entities.SerialItem;
 import com.lostfilmtvandroid.lostfilmtv.entities.SerialsContainer;
@@ -62,9 +63,9 @@ public class LostFilmFromXML {
                 eventType = xmlResourceParser.next();
             }
         } catch(XmlPullParserException e) {
-
+            Log.e(LostFilmFromXML.class.getName(), e.getMessage(), e);
         } catch(IOException e) {
-
+            Log.e(LostFilmFromXML.class.getName(), e.getMessage(), e);
         }
         return serialsContainer;
     }
